@@ -1,36 +1,146 @@
-<main id="main">
-    <div class="container-fluid mt-5 mb-5 pb-5">
-        <div class="row">
-            <div class="col-12 col-md-12 col-lg-6 col-xl-6 mx-auto mb-2">
-                <h1>Image Generation using DALL·E models & Open AI</h1>
-                <div class="mb-3">
-                    <label for="txtPrompt" class="form-label">Insert your image description</label>
-                    <textarea class="form-control" id="txtPrompt" rows="3"></textarea>
-                </div>
-                <button id="btnGenerate" class="btn btn-primary mb-3">Generate 2 Images</button>
-                <hr/>
-                <b>References</b>
-                <ul>
-                    <li>
-                        <a href="https://bigthink.com/the-future/dall-e-midjourney-stable-diffusion-models-generative-ai/">How does DALL·E generate images?</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/anasnajaa/openai_sample">Source Code</a>
-                    </li>
-                    <li>
-                        <a href="https://beta.openai.com/docs/api-reference">Open AI Reference</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</main>
-<script>
-    const btnGenerate = $("#btnGenerate");
-    const txtPrompt = $("#txtPrompt");
+<style>
+html,
+body {
+  height: 100%;
+}
 
-    btnGenerate.on("click", () => {
-        const prompt = txtPrompt.val();
-        window.location = "/generate?prompt="+prompt;
-    });
+body {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+</style>
+
+<main class="form-signin w-100 m-auto">
+    <h1 class="h3 mb-3 fw-normal text-center">مدرسة مريم بنت عبدالله بنت صباح الأول م.ب</h1>
+    <h2 class="text-center">الإبداع في الذكاء الاصطناعي</h2>
+    اسم الطالبة: <b>الجود عبدالعزيز ابراهيم الجعفر</b>
+    <p>
+        المعلمة المشرفة: آلاء محمد هاشم ملا حويش المحمود
+        <br/>
+        رئيسة القسم: أ.نسرين سعودي
+        <br/>
+        الموجهة الفنية: أ.حنان غضنفري
+    </p>
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" id="txtUsername" placeholder="اسم المستخدم">
+      <label for="txtUsername">اسم المستخدم</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="txtPassword" placeholder="كلمة المرور">
+      <label for="txtPassword">كلمة المرور</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" id="btnLogin" type="submit">تسجيل الدخول</button>
+</main>
+
+<script>
+    const postRequest = async (url, queryParams, data) => {
+        let finalUrl = "";
+
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        const raw = JSON.stringify(data);
+        const requestOptions = {
+            method: "POST",
+            headers: headers,
+            body: raw,
+            credentials: "include"
+        };
+
+        if (queryParams === undefined || queryParams === null) {
+            finalUrl = url;
+        } else {
+            finalUrl = `${url}?${new URLSearchParams(queryParams)}`;
+        }
+
+        return fetch(finalUrl, requestOptions).catch((error) => console.log("api-error", error));
+    };
+
+    const txtUsername = document.getElementById('txtUsername');
+    const txtPassword = document.getElementById('txtPassword');
+
+    document.getElementById('btnLogin').onclick = async ()=>{
+        const response = await postRequest("/api/login", {}, {
+            username: txtUsername.value,
+            password: txtPassword.value
+        });
+        if(response.ok){
+            window.location = "/dashboard";
+        }
+    }
+
 </script>

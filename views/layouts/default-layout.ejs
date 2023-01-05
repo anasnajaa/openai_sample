@@ -23,13 +23,14 @@
                         الإبداع في الذكاء الاصطناعي
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="/">الرئيسية</a>
-                            </li>                            
+                            </li>
+                            <%if(user){%>
                             <li class="nav-item">
                                 <a class="nav-link" href="/dashboard">الصور</a>
                             </li>
@@ -37,11 +38,9 @@
                                 <a class="nav-link" href="/prompt">إضافة صورة</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/about">نبذة</a>
+                                <a class="nav-link" href="/about">الدليل الإرشادي</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/guide">الدليل الإرشادي</a>
-                            </li>
+                            <%}%>
                         </ul>
                     </div>
                 </div>

@@ -10,9 +10,9 @@ module.exports = async (req, res, next) => {
             res.cookie("token", enc.content);
             res.cookie("key", enc.iv);
             res.status(200).json({ message: "ok" });
-            return;
+        } else {
+            res.status(400).json({ message: "خطأ في اسم المستخدم او كلمة المرور" });
         }
-        res.status(400).json({ message: "خطأ في اسم المستخدم او كلمة المرور" });
     } catch (err) {
         res.status(400).json({ message: "خطأ في اسم المستخدم او كلمة المرور" });
     }

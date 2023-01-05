@@ -16,7 +16,7 @@
                     <br/>
                     الموجهة الفنية: أ.حنان غضنفري
                 </p>
-
+                <%if(user === undefined || user === null ){%>
                 <div class="form-floating mt-2 mb-2">
                     <input type="text" class="form-control" id="txtUsername" placeholder="اسم المستخدم">
                     <label for="txtUsername">اسم المستخدم</label>
@@ -28,6 +28,9 @@
                 </div>
 
                 <button class="w-100 btn btn-lg btn-primary" id="btnLogin" type="submit">تسجيل الدخول</button>
+                <%} else {%>
+                <button class="w-100 btn btn-lg btn-secondary" id="btnLogout" type="submit">تسجيل الخروج</button>
+                <%}%>
             </div>
         </div>
     </div>
@@ -55,18 +58,30 @@
 
         return fetch(finalUrl, requestOptions).catch((error) => console.log("api-error", error));
     };
-
-    const txtUsername = document.getElementById('txtUsername');
-    const txtPassword = document.getElementById('txtPassword');
-
-    document.getElementById('btnLogin').onclick = async ()=>{
+</script>
+<%if(user === undefined || user === null ){%>
+<script>
+    const btnLogin = $("#btnLogin");
+    const txtUsername = $("#txtUsername");
+    const txtPassword = $("#txtPassword");
+    btnLogin.on("click", async()=> {
         const response = await postRequest("/api/login", {}, {
-            username: txtUsername.value,
-            password: txtPassword.value
+            username: txtUsername.val(),
+            password: txtPassword.val()
         });
         if(response.ok){
             window.location = "/dashboard";
         }
-    }
-
+    });
 </script>
+<%} else {%>
+<script>
+    const btnLogout = $("#btnLogout");
+    btnLogout.on("click", async()=> {
+        const response = await postRequest("/api/logout", {}, {});
+        if(response.ok){
+            window.location = "/";
+        }
+    });
+</script>
+<%}%>

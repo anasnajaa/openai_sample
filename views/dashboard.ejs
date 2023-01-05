@@ -1,23 +1,6 @@
-
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">مثال الألبوم</h1>
-        <p class="lead text-muted">
-            انشاء صور باستخدام DALL.E
-        </p>
-        <p>
-          <a href="/prompt" class="btn btn-primary my-2">انشاء صورة جديدة</a>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <div class="album py-5 bg-light">
+  <div class="py-5 bg-light">
     <div class="container">
-
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
         <%pics.forEach((pic) => {%>
         <div class="col">
           <div class="card shadow-sm">
@@ -52,9 +35,6 @@
           </div>
         </div>
         <%})%>
-
-        
-
       </div>
     </div>
   </div>

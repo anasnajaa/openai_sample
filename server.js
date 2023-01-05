@@ -5,7 +5,7 @@ const expressLayouts = require("express-ejs-layouts");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 
-const { isLoggedIn } = require('./middleware/auth');
+const { isLoggedIn, userIfExist } = require('./middleware/auth');
 const { picModel } = require('./models/picture');
 
 
@@ -32,18 +32,17 @@ mongoose.connect(mongodbUri, {
 const connection = mongoose.connection;
 
 connection.once("open", async () => {
-
+    // apis
     app.post("/api/login", require('./controllers/apiLogin'));
-
+    app.post("/api/logout", require('./controllers/apiLogout'));
     app.post("/api/generate", isLoggedIn, require('./controllers/apiGenerate'));
 
-    app.get("/", require('./controllers/pageIndex'));
-
+    // pages
+    app.get("/", userIfExist, require('./controllers/pageIndex'));
     app.get("/view/:id", isLoggedIn, require('./controllers/pageViewById'));
-
     app.get("/dashboard", isLoggedIn, require('./controllers/pageDashboard'));
-
     app.get("/prompt", isLoggedIn, require('./controllers/pagePrompt'));
+    app.get("/about", isLoggedIn, require('./controllers/pageAbout'));
 
     app.listen(process.env.PORT || "80", () => {
         console.log("Server started on: " + process.env.PORT);

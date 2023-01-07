@@ -6,10 +6,6 @@ const path = require("path");
 const AWS = require("aws-sdk");
 const uuid = require("uuid");
 
-const environment = process.env.NODE_ENV;
-
-const imgRoot = "https://second-hand.s3.me-south-1.amazonaws.com/image/";
-
 exports.uploadFile = async (req, res, next) => {
     try {
         const { type } = req.query;
@@ -100,11 +96,8 @@ exports.uploadUrl = async (url) => {
         const data = await s3.upload(params).promise();
 
         return {
-            title: "File Uploaded",
-            message: "File uploaded successfully",
-            type: "success",
             file: {
-                name: data.key.replace("image/", ""),
+                name: data.key.replace("openai/", ""),
                 url: data.Location
             },
             data

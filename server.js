@@ -39,10 +39,14 @@ connection.once("open", async () => {
 
     // pages
     app.get("/", userIfExist, require('./controllers/pageIndex'));
+    app.get("/random-picture", userIfExist, require('./controllers/pageRandomPicture'));
+
     app.get("/view/:id", isLoggedIn, require('./controllers/pageViewById'));
     app.get("/dashboard", isLoggedIn, require('./controllers/pageDashboard'));
     app.get("/prompt", isLoggedIn, require('./controllers/pagePrompt'));
     app.get("/about", isLoggedIn, require('./controllers/pageAbout'));
+
+
 
     app.listen(process.env.PORT || "80", () => {
         console.log("Server started on: " + process.env.PORT);

@@ -13,6 +13,7 @@ const schema = new Schema(
             {
                 text: { type: String },
                 correct: { type: Boolean },
+                selectedCount: { type: Number }
             }
         ]
     },
